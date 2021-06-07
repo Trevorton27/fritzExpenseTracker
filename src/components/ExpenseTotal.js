@@ -1,13 +1,11 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Button from "react-bootstrap/Button";
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 
-function ExpenseTotal({ expenseList, requestListModify }) {
+function ExpenseTotal({ expenseList, setExpenseList }) {
   const deleteAllItems = () => {
-    expenseList = [];
-    requestListModify(expenseList);
+    setExpenseList([]);
   };
-
   let total = 0;
   if (expenseList) {
     expenseList.map((items) => {
@@ -17,14 +15,14 @@ function ExpenseTotal({ expenseList, requestListModify }) {
 
   return (
     <>
-      <tr className="font-italic table-total">
+      <tr className='font-italic table-total'>
         <td></td>
         <td>-Summary-</td>
         <td>Number of Items: {expenseList.length}</td>
         <td>Total: $ {total}</td>
         <td></td>
         <td>
-          <Button variant="danger" onClick={deleteAllItems}>
+          <Button variant='danger' onClick={deleteAllItems}>
             Delete All
           </Button>
         </td>

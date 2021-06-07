@@ -1,95 +1,94 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
-function InputForm({ callBackAddItem }) {
-  const blankForm = {
-    id: Date.now(),
-    name: "",
-    date: "",
-    amount: "",
-    payment: "Cash",
-    detail: "",
-  };
-  const [itemInfo, setItemInfo] = useState(blankForm);
+function InputForm({ expenseList, setExpenseList }) {
+  const [itemName, setItemName] = useState('');
+  const [date, setDate] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [paymentType, setPaymentType] = useState('');
+  const [location, setLocation] = useState('');
 
   const submitHandler = (e) => {
     e.preventDefault();
-    callBackAddItem(itemInfo);
-    setItemInfo(blankForm);
+
+    const newExpense = {
+      id: Date.now(),
+      itemName,
+      date,
+      amount,
+      paymentType,
+      location
+    };
+
+    setExpenseList([...expenseList, newExpense]);
   };
 
   return (
     <Form onSubmit={submitHandler}>
       <Row>
-        <Form.Group as={Col} controlId="formName">
-          <Form.Label>Name: </Form.Label>
+        <Form.Group as={Col} controlId='formName'>
+          <Form.Label>Item: </Form.Label>
           <Form.Control
-            type="text"
-            required
-            placeholder="Purchase was made in?"
-            value={itemInfo.name}
-            onChange={(e) => setItemInfo({ ...itemInfo, name: e.target.value })}
+            type='text'
+            //required
+            placeholder='What did you buy?'
+            value={itemName}
+            onChange={(e) => setItemName(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Form.Group as={Col} controlId="formDetail">
-          <Form.Label>Details: </Form.Label>
+        <Form.Group as={Col} controlId='formDetail'>
+          <Form.Label>Location: </Form.Label>
           <Form.Control
-            type="text"
-            required
-            placeholder="Add comments..."
-            value={itemInfo.detail}
-            onChange={(e) =>
-              setItemInfo({ ...itemInfo, detail: e.target.value })
-            }
+            type='text'
+            //required
+            placeholder='Where did you buy it?'
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
           ></Form.Control>
         </Form.Group>
       </Row>
       <Row>
-        <Form.Group as={Col} controlId="formDate">
+        <Form.Group as={Col} controlId='formDate'>
           <Form.Label>Date: </Form.Label>
           <Form.Control
-            type="date"
-            required
-            value={itemInfo.date}
-            onChange={(e) => setItemInfo({ ...itemInfo, date: e.target.value })}
+            type='date'
+            //required
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formAmount">
+        <Form.Group as={Col} controlId='formAmount'>
           <Form.Label>Amount: </Form.Label>
           <Form.Control
-            type="number"
-            min="0"
-            required
-            value={itemInfo.amount}
-            onChange={(e) =>
-              setItemInfo({ ...itemInfo, amount: e.target.value })
-            }
+            type='number'
+            min='0'
+            //required
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formType">
-          <Form.Label>Type: </Form.Label>
-          <Form.Control
-            as="select"
-            value={itemInfo.payment}
-            onChange={(e) =>
-              setItemInfo({ ...itemInfo, payment: e.target.value })
-            }
+        <Form.Group as={Col} controlId='formType'>
+          <Form.Label>Payment Type: </Form.Label>
+          <select
+            as='select'
+            value={paymentType}
+            onChange={(e) => setPaymentType(e.target.value)}
           >
-            <option value="Cash">Cash</option>
-            <option value="Master Card">Master Card</option>
-            <option value="Debit Card">Debit Card</option>
-            <option value="Check">Check</option>
-          </Form.Control>
+            <option value='Cash'>Cash</option>
+            <option value='Master Card'>Master Card</option>
+            <option value='Debit Card'>Debit Card</option>
+            <option value='Check'>Check</option>
+          </select>
         </Form.Group>
       </Row>
-      <div className="text-center ">
-        <Button type="submit">Add Expense</Button>
+      <div className='text-center '>
+        <Button type='submit'>Add Expense</Button>
       </div>
     </Form>
   );

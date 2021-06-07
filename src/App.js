@@ -1,43 +1,34 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import InputForm from "./components/InputForm";
-import Container from "react-bootstrap/Container";
-import TableContainer from "./components/TableContainer";
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import InputForm from './components/InputForm';
+import Container from 'react-bootstrap/Container';
+import ExpenseTable from './components/ExpenseTable';
 
 function App() {
   const [expenseList, setExpenseList] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("list")) {
-      setExpenseList(JSON.parse(localStorage.getItem("list")));
+    if (localStorage.getItem('list')) {
+      setExpenseList(JSON.parse(localStorage.getItem('list')));
     }
   }, []);
 
   useEffect(() => {
     if (expenseList) {
-      localStorage.setItem("list", JSON.stringify(expenseList));
+      localStorage.setItem('list', JSON.stringify(expenseList));
     }
   }, [expenseList]);
 
-  const removeTableValue = (childList) => {
-    setExpenseList([...childList]);
-  };
-
-  const addNewItem = (childInfo) => {
-    !expenseList
-      ? setExpenseList([childInfo])
-      : setExpenseList([...expenseList, childInfo]);
-  };
-
   return (
-    <div className="App">
+    <div className='App'>
       <Container>
-        <h1 className="text-center head-modify">Expense Tracker</h1>
-        <InputForm callBackAddItem={addNewItem} />
+        <h1 className='text-center head-modify'>Expense Tracker</h1>
+        <InputForm expenseList={expenseList} setExpenseList={setExpenseList} />
         <br></br>
-        <TableContainer
+        <ExpenseTable
+          setExpenseList={setExpenseList}
           expenseList={expenseList}
-          tableListChange={removeTableValue}
+          // tableListChange={removeTableValue}
         />
       </Container>
     </div>
